@@ -1,0 +1,94 @@
+﻿<Window x:Class="EmployeeRewardManagement.AdminDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Admin Dashboard" Height="450" Width="800">
+    <Grid>
+    <!-- Add Employee Section -->
+    <GroupBox Header="Add Employee" HorizontalAlignment="Left" VerticalAlignment="Top" Width="350" Height="300" Margin="10">
+        <StackPanel>
+            <!-- Employee Name TextBox with Placeholder -->
+            <Grid>
+                <TextBox x:Name="employeeNameTextBox" Width="300" Margin="10" TextChanged="employeeNameTextBox_TextChanged"/>
+                <TextBlock Text="Employee Name" IsHitTestVisible="False" Foreground="Gray"
+                           VerticalAlignment="Center" Margin="15,0,0,0" Visibility="Visible" 
+                           x:Name="employeeNamePlaceholder"/>
+            </Grid>
+
+            <!-- Employee Address TextBox with Placeholder -->
+            <Grid>
+                <TextBox x:Name="employeeAddressTextBox" Width="300" Margin="10" TextChanged="employeeAddressTextBox_TextChanged"/>
+                <TextBlock Text="Address" IsHitTestVisible="False" Foreground="Gray"
+                           VerticalAlignment="Center" Margin="15,0,0,0" Visibility="Visible" 
+                           x:Name="employeeAddressPlaceholder"/>
+            </Grid>
+
+            <!-- Employee Business Unit TextBox with Placeholder -->
+            <Grid>
+                <TextBox x:Name="employeeBusinessUnitTextBox" Width="300" Margin="10" TextChanged="employeeBusinessUnitTextBox_TextChanged"/>
+                <TextBlock Text="Business Unit" IsHitTestVisible="False" Foreground="Gray"
+                           VerticalAlignment="Center" Margin="15,0,0,0" Visibility="Visible" 
+                           x:Name="employeeBusinessUnitPlaceholder"/>
+            </Grid>
+
+            <!-- Employee Job Title TextBox with Placeholder -->
+            <Grid>
+                <TextBox x:Name="employeeJobTitleTextBox" Width="300" Margin="10" TextChanged="employeeJobTitleTextBox_TextChanged"/>
+                <TextBlock Text="Job Title" IsHitTestVisible="False" Foreground="Gray"
+                           VerticalAlignment="Center" Margin="15,0,0,0" Visibility="Visible" 
+                           x:Name="employeeJobTitlePlaceholder"/>
+            </Grid>
+
+            <!-- Manager ComboBox -->
+            <ComboBox x:Name="employeeManagerComboBox" Width="300" Margin="10"/>
+
+            <Button Content="Add Employee" Width="120" Margin="10" Click="AddEmployeeButton_Click"/>
+        </StackPanel>
+    </GroupBox>
+
+        <!-- Add Manager Section -->
+        <GroupBox Header="Add Manager" HorizontalAlignment="Left" VerticalAlignment="Top" Width="350" Height="300" Margin="400,10,0,0">
+            <StackPanel>
+                <!-- Manager Name TextBox with Placeholder -->
+                <Grid>
+                    <TextBox x:Name="managerNameTextBox" Width="300" Margin="10" TextChanged="managerNameTextBox_TextChanged" />
+                    <TextBlock Text="Manager Name" IsHitTestVisible="False" Foreground="Gray" 
+                       VerticalAlignment="Center" Margin="15,0,0,0" Visibility="Visible" 
+                       x:Name="managerNamePlaceholder" />
+                </Grid>
+
+                <!-- Manager Address TextBox with Placeholder -->
+                <Grid>
+                    <TextBox x:Name="managerAddressTextBox" Width="300" Margin="10" TextChanged="managerAddressTextBox_TextChanged" />
+                    <TextBlock Text="Address" IsHitTestVisible="False" Foreground="Gray" 
+                       VerticalAlignment="Center" Margin="15,0,0,0" Visibility="Visible" 
+                       x:Name="managerAddressPlaceholder" />
+                </Grid>
+
+                <!-- Manager Business Unit TextBox with Placeholder -->
+                <Grid>
+                    <TextBox x:Name="managerBusinessUnitTextBox" Width="300" Margin="10" TextChanged="managerBusinessUnitTextBox_TextChanged" />
+                    <TextBlock Text="Business Unit" IsHitTestVisible="False" Foreground="Gray" 
+                       VerticalAlignment="Center" Margin="15,0,0,0" Visibility="Visible" 
+                       x:Name="managerBusinessUnitPlaceholder" />
+                </Grid>
+
+                <!-- Manager Job Title TextBox with Placeholder -->
+                <Grid>
+                    <TextBox x:Name="managerJobTitleTextBox" Width="300" Margin="10" TextChanged="managerJobTitleTextBox_TextChanged" />
+                    <TextBlock Text="Job Title" IsHitTestVisible="False" Foreground="Gray" 
+                       VerticalAlignment="Center" Margin="15,0,0,0" Visibility="Visible" 
+                       x:Name="managerJobTitlePlaceholder" />
+                </Grid>
+
+                <!-- Superior Manager ComboBox -->
+                <ComboBox x:Name="managerSuperiorComboBox" Width="300" Margin="10" />
+
+                <Button Content="Add Manager" Width="120" Margin="10" Click="AddManagerButton_Click" />
+            </StackPanel>
+        </GroupBox>
+        <!-- Employees and Managers List -->
+        <DataGrid x:Name="employeeDataGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,230,0,10" Width="350" Height="150"/>
+        <DataGrid x:Name="managerDataGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,230,10,10" Width="350" Height="150"/>
+
+    </Grid>
+</Window>

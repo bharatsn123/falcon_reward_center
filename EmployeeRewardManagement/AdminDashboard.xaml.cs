@@ -1,0 +1,136 @@
+﻿using EmployeeRewardManagement;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace EmployeeRewardManagement
+{
+    public partial class AdminDashboard : Window
+    {
+        public AdminDashboard()
+        {
+            InitializeComponent();
+            LoadEmployees();
+            LoadManagers();
+        }
+
+        private void AddEmployeeButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (var context = new FalconDbContext())
+            {
+                var employee = new Employee
+                {
+                    EmployeeID = GenerateEmployeeID(),
+                    Name = employeeNameTextBox.Text,
+                    Address = employeeAddressTextBox.Text,
+                    BusinessUnit = employeeBusinessUnitTextBox.Text,
+                    JobTitle = employeeJobTitleTextBox.Text,
+                    ManagerID = (int)employeeManagerComboBox.SelectedValue
+                };
+
+                context.Employee.Add(employee);
+                context.SaveChanges();
+                MessageBox.Show("Employee added successfully!");
+            }
+
+            LoadEmployees();
+        }
+
+        private void AddManagerButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (var context = new FalconDbContext())
+            {
+                var manager = new Manager
+                {
+                    ManagerID = GenerateManagerID(),
+                    Name = managerNameTextBox.Text,
+                    Address = managerAddressTextBox.Text,
+                    BusinessUnit = managerBusinessUnitTextBox.Text,
+                    JobTitle = managerJobTitleTextBox.Text,
+                    SuperiorManagerID = (int?)managerSuperiorComboBox.SelectedValue
+                };
+
+                context.Manager.Add(manager);
+                context.SaveChanges();
+                MessageBox.Show("Manager added successfully!");
+            }
+
+            LoadManagers();
+        }
+
+        private int GenerateEmployeeID()
+        {
+            using (var context = new FalconDbContext())
+            {
+                var lastEmployee = context.Employee.OrderByDescending(e => e.EmployeeID).FirstOrDefault();
+                return lastEmployee != null ? lastEmployee.EmployeeID + 1 : 2001;
+            }
+        }
+
+        private int GenerateManagerID()
+        {
+            using (var context = new FalconDbContext())
+            {
+                var lastManager = context.Manager.OrderByDescending(m => m.ManagerID).FirstOrDefault();
+                return lastManager != null ? lastManager.ManagerID + 1 : 1001;
+            }
+        }
+
+        private void LoadEmployees()
+        {
+            using (var context = new FalconDbContext())
+            {
+                employeeDataGrid.ItemsSource = context.Employee.ToList();
+            }
+        }
+
+        private void LoadManagers()
+        {
+            using (var context = new FalconDbContext())
+            {
+                managerDataGrid.ItemsSource = context.Manager.ToList();
+            }
+        }
+
+        private void employeeNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            employeeNamePlaceholder.Visibility = string.IsNullOrEmpty(employeeNameTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void employeeAddressTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            employeeAddressPlaceholder.Visibility = string.IsNullOrEmpty(employeeAddressTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void employeeBusinessUnitTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            employeeBusinessUnitPlaceholder.Visibility = string.IsNullOrEmpty(employeeBusinessUnitTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void employeeJobTitleTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            employeeJobTitlePlaceholder.Visibility = string.IsNullOrEmpty(employeeJobTitleTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void managerNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            managerNamePlaceholder.Visibility = string.IsNullOrEmpty(managerNameTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void managerAddressTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            managerAddressPlaceholder.Visibility = string.IsNullOrEmpty(managerAddressTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void managerBusinessUnitTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            managerBusinessUnitPlaceholder.Visibility = string.IsNullOrEmpty(managerBusinessUnitTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void managerJobTitleTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            managerJobTitlePlaceholder.Visibility = string.IsNullOrEmpty(managerJobTitleTextBox.Text) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+    }
+}
