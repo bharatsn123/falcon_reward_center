@@ -39,7 +39,7 @@
             </Grid>
 
             <!-- Manager ComboBox -->
-            <ComboBox x:Name="employeeManagerComboBox" Width="300" Margin="10"/>
+                <ComboBox x:Name="employeeManagerComboBox" Width="300" Margin="10"/>
 
             <Button Content="Add Employee" Width="120" Margin="10" Click="AddEmployeeButton_Click"/>
         </StackPanel>
@@ -87,8 +87,8 @@
             </StackPanel>
         </GroupBox>
         <!-- Employees and Managers List -->
-        <DataGrid x:Name="employeeDataGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,230,0,10" Width="350" Height="150"/>
-        <DataGrid x:Name="managerDataGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,230,10,10" Width="350" Height="150"/>
+        <DataGrid x:Name="employeeDataGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,230,0,10" Width="350" Height="150" CanUserAddRows="False" />
+        <DataGrid x:Name="managerDataGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,230,10,10" Width="350" Height="150" CanUserAddRows="False" />
 
     </Grid>
 </Window>

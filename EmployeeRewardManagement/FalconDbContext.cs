@@ -38,15 +38,15 @@ namespace EmployeeRewardManagement
             modelBuilder.Entity<RewardStore>()
                 .HasKey(r => r.StoreItemID);  // Define StoreItemID as the primary key
 
-        modelBuilder.Entity<Manager>()
-                .HasMany(m => m.Employees)
-                .WithOne(e => e.Manager)
-                .HasForeignKey(e => e.ManagerID);
+        //modelBuilder.Entity<Manager>()
+        //        .HasMany(m => m.Employees)
+        //        .WithOne(e => e.Manager)
+        //        .HasForeignKey(e => e.ManagerID);
 
-            modelBuilder.Entity<Manager>()
-                .HasOne(m => m.SuperiorManager)
-                .WithMany()
-                .HasForeignKey(m => m.SuperiorManagerID);
+        //    modelBuilder.Entity<Manager>()
+        //        .HasOne(m => m.SuperiorManager)
+        //        .WithMany()
+        //        .HasForeignKey(m => m.SuperiorManagerID);
         }
     }
 

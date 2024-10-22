@@ -1,7 +1,9 @@
 ﻿using EmployeeRewardManagement;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace EmployeeRewardManagement
 {
@@ -25,7 +27,10 @@ namespace EmployeeRewardManagement
                     Address = employeeAddressTextBox.Text,
                     BusinessUnit = employeeBusinessUnitTextBox.Text,
                     JobTitle = employeeJobTitleTextBox.Text,
-                    ManagerID = (int)employeeManagerComboBox.SelectedValue
+                    ManagerID = context.Employee
+                                        .Where(e => e.Name == employeeManagerComboBox.SelectedValue.ToString())
+                                        .Select(e => e.ManagerID)
+                                        .FirstOrDefault()
                 };
 
                 context.Employee.Add(employee);
@@ -40,17 +45,20 @@ namespace EmployeeRewardManagement
         {
             using (var context = new FalconDbContext())
             {
-                var manager = new Manager
+                var manager = new Employee
                 {
-                    ManagerID = GenerateManagerID(),
+                    EmployeeID = GenerateManagerID(),
                     Name = managerNameTextBox.Text,
                     Address = managerAddressTextBox.Text,
                     BusinessUnit = managerBusinessUnitTextBox.Text,
                     JobTitle = managerJobTitleTextBox.Text,
-                    SuperiorManagerID = (int?)managerSuperiorComboBox.SelectedValue
+                    ManagerID = context.Employee
+                                        .Where(e => e.Name == managerSuperiorComboBox.SelectedValue.ToString())
+                                        .Select(e => e.ManagerID)
+                                        .FirstOrDefault()
                 };
 
-                context.Manager.Add(manager);
+                context.Employee.Add(manager);
                 context.SaveChanges();
                 MessageBox.Show("Manager added successfully!");
             }
@@ -62,7 +70,10 @@ namespace EmployeeRewardManagement
         {
             using (var context = new FalconDbContext())
             {
-                var lastEmployee = context.Employee.OrderByDescending(e => e.EmployeeID).FirstOrDefault();
+                var lastEmployee = context.Employee
+                    .Where(e => e.EmployeeID >= 2000 && e.EmployeeID < 3000) // Filters for Employee IDs starting with 2
+                    .OrderByDescending(e => e.EmployeeID)
+                    .FirstOrDefault();
                 return lastEmployee != null ? lastEmployee.EmployeeID + 1 : 2001;
             }
         }
@@ -71,8 +82,11 @@ namespace EmployeeRewardManagement
         {
             using (var context = new FalconDbContext())
             {
-                var lastManager = context.Manager.OrderByDescending(m => m.ManagerID).FirstOrDefault();
-                return lastManager != null ? lastManager.ManagerID + 1 : 1001;
+                var lastManager = context.Employee
+                    .Where(e => e.EmployeeID >= 1000 && e.EmployeeID < 2000) // Filters for Manager IDs starting with 1
+                    .OrderByDescending(e => e.EmployeeID)
+                    .FirstOrDefault();
+                return lastManager != null ? lastManager.EmployeeID + 1 : 1001;
             }
         }
 
@@ -80,7 +94,9 @@ namespace EmployeeRewardManagement
         {
             using (var context = new FalconDbContext())
             {
-                employeeDataGrid.ItemsSource = context.Employee.ToList();
+                employeeDataGrid.ItemsSource = context.Employee
+                    .Where(e => e.EmployeeID >= 2000 && e.EmployeeID < 3000)
+                    .ToList();
             }
         }
 
@@ -88,9 +104,31 @@ namespace EmployeeRewardManagement
         {
             using (var context = new FalconDbContext())
             {
-                managerDataGrid.ItemsSource = context.Manager.ToList();
+
+                // Filter EmployeeID starting with 1 (assuming EmployeeID is 4 digits)
+                var filteredManagers = context.Employee
+                    .Where(e => e.EmployeeID >= 1000 && e.EmployeeID < 2000)
+                    .ToList();
+
+                // Set the data source for managerDataGrid
+                managerDataGrid.ItemsSource = filteredManagers;
+                employeeManagerComboBox.ItemsSource = filteredManagers;
+                employeeManagerComboBox.DisplayMemberPath = "Name";
+                managerSuperiorComboBox.ItemsSource = filteredManagers;
+                managerSuperiorComboBox.DisplayMemberPath = "Name";
             }
         }
+
+        //private void employeeManagerComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        //{
+        //    Color selectedColor = (employeeManagerComboBox.SelectedItem as PropertyInfo).GetValue(null, null);
+        //}
+
+        //private void managerSuperiorComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        //{
+        //    Color selectedColor = (Color)(cmbColors.SelectedItem as PropertyInfo).GetValue(null, null);
+        //    this.Background = new SolidColorBrush(selectedColor);
+        //}
 
         private void employeeNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {

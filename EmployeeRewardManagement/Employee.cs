@@ -14,8 +14,9 @@ namespace EmployeeRewardManagement
         public string BusinessUnit { get; set; }
         public string JobTitle { get; set; }
         public int Points { get; set; }
-        public int ManagerID { get; set; } // Foreign key to Manager
-        public Manager Manager { get; set; } // Navigation property
+        public int? ManagerID { get; set; } // Foreign key to Manager
+        public string? Subordinates { get; set; } // Foreign key to Manager
+        //public Manager Manager { get; set; } // Navigation property
     }
 
 }
