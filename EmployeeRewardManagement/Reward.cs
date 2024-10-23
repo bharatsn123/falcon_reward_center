@@ -28,7 +28,7 @@ namespace EmployeeRewardManagement
         public int RewardID { get; set; }
         public DateTime TransactionDate { get; set; } = DateTime.Now;
 
-        public Manager Manager { get; set; }
+        public Employee Manager { get; set; }
         public Employee Employee { get; set; }
         public Reward Reward { get; set; }
     }

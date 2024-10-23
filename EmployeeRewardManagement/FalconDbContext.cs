@@ -11,7 +11,6 @@ namespace EmployeeRewardManagement
     public class FalconDbContext : DbContext
     {
         public DbSet<Employee> Employee { get; set; }
-        public DbSet<Manager> Manager { get; set; }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Reward> Reward { get; set; }
         public DbSet<Transaction> Transaction { get; set; }

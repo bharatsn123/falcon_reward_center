@@ -119,16 +119,6 @@ namespace EmployeeRewardManagement
             }
         }
 
-        //private void employeeManagerComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        //{
-        //    Color selectedColor = (employeeManagerComboBox.SelectedItem as PropertyInfo).GetValue(null, null);
-        //}
-
-        //private void managerSuperiorComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        //{
-        //    Color selectedColor = (Color)(cmbColors.SelectedItem as PropertyInfo).GetValue(null, null);
-        //    this.Background = new SolidColorBrush(selectedColor);
-        //}
 
         private void employeeNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
