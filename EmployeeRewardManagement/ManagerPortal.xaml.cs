@@ -6,18 +6,23 @@ namespace EmployeeRewardManagement
 {
     public partial class ManagerPortal : Window
     {
+        public string EmployeeName { get; set; } // To store the employee name
         public int RewardPoints { get; set; }
+        public int EmployeeId { get; set; }
         public string CurrentDate { get; set; }
         public string CurrentTime { get; set; }
 
         private DispatcherTimer timer;
 
-        public ManagerPortal(int rewardPoints)
+        public ManagerPortal(int employeeId, string name, int points)
         {
             InitializeComponent();
 
+            this.EmployeeName = name;
+
+            this.EmployeeId = employeeId;
             // Set reward points
-            RewardPoints = rewardPoints;
+            RewardPoints = points;
 
             // Set the current date
             CurrentDate = DateTime.Now.ToString("d MMMM yyyy");
@@ -40,11 +45,14 @@ namespace EmployeeRewardManagement
             DataContext = this; // Refresh data binding
         }
 
-        // Button click events
+
         private void ViewAchievements_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("View Your Achievements button clicked!");
-            // Logic to navigate to Achievements page
+            //MessageBox.Show("View Achievements button clicked!");
+            // Logic to navigate to achievements page
+
+            var employeeAchievementsWindow = new EmployeeAchievements(EmployeeId);
+            employeeAchievementsWindow.Show();
         }
 
         private void VisitRewardStore_Click(object sender, RoutedEventArgs e)
@@ -55,8 +63,8 @@ namespace EmployeeRewardManagement
 
         private void ViewLeaderboard_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("View Leaderboard button clicked!");
-            // Logic to navigate to Leaderboard page
+            var leaderboardWindow = new EmployeeLeaderboard();
+            leaderboardWindow.Show();
         }
 
         private void ViewAwardCatalog_Click(object sender, RoutedEventArgs e)
@@ -76,5 +84,14 @@ namespace EmployeeRewardManagement
             MessageBox.Show("Grant Award button clicked!");
             // Logic to navigate to Grant Award page
         }
+
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Logging out...");
+            this.Close(); // Close the manager portal and log out
+            // You can navigate to the login page or close the app
+        }
+
+       
     }
 }

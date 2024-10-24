@@ -79,8 +79,8 @@ namespace EmployeeRewardManagement
             using (var context = new FalconDbContext())
             {
                 // Convert the username to a number to handle validation
-                long userID;
-                if (!long.TryParse(username, out userID))
+                int userID;
+                if (!int.TryParse(username, out userID))
                 {
                     MessageBox.Show("Invalid username format. Are you trying to login as Admin role?");
                     return;
@@ -110,7 +110,7 @@ namespace EmployeeRewardManagement
                     {
                         MessageBox.Show("Employee login successful!");
                         // Open Employee dashboard
-                        var employeeDashboard = new EmployeePortal(0);
+                        var employeeDashboard = new EmployeePortal(userID, employee.Name, employee.Points);
                         employeeDashboard.Show();
                         this.Close();
                         
@@ -127,7 +127,7 @@ namespace EmployeeRewardManagement
                     {
                         MessageBox.Show("Manager login successful!");
                         // Open Manager dashboard
-                        var managerDashboard = new ManagerPortal(0);
+                        var managerDashboard = new ManagerPortal(userID, manager.Name, manager.Points);
                         managerDashboard.Show();
                         this.Close();
                     }

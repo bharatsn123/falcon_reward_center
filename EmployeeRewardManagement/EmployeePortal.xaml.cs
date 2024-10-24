@@ -7,17 +7,25 @@ namespace EmployeeRewardManagement
     public partial class EmployeePortal : Window
     {
         public int RewardPoints { get; set; }
+
+        public string EmployeeName { get; set; }
+
+        public int EmployeeId { get; set; }
         public string CurrentDate { get; set; }
         public string CurrentTime { get; set; }
 
         private DispatcherTimer timer;
 
-        public EmployeePortal(int rewardPoints)
+        public EmployeePortal(int employeeId, string name, int points)
         {
             InitializeComponent();
 
             // Set the reward points
-            RewardPoints = rewardPoints;
+            RewardPoints = points;
+
+            EmployeeName = name;
+
+            EmployeeId = employeeId;
 
             // Start a timer to update the time
             timer = new DispatcherTimer();
@@ -32,6 +40,7 @@ namespace EmployeeRewardManagement
             DataContext = this;
         }
 
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             // Update the current time every second
@@ -43,8 +52,11 @@ namespace EmployeeRewardManagement
         // Button click events
         private void ViewAchievements_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("View Achievements button clicked!");
+            //MessageBox.Show("View Achievements button clicked!");
             // Logic to navigate to achievements page
+
+            var employeeAchievementsWindow = new EmployeeAchievements(EmployeeId);
+            employeeAchievementsWindow.Show();
         }
 
         private void VisitRewardStore_Click(object sender, RoutedEventArgs e)
@@ -55,14 +67,20 @@ namespace EmployeeRewardManagement
 
         private void ViewLeaderboard_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("View Leaderboard button clicked!");
-            // Logic to navigate to leaderboard page
+            var leaderboardWindow = new EmployeeLeaderboard();
+            leaderboardWindow.Show();
         }
 
         private void ViewAwardCatalog_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("View Award Catalog button clicked!");
             // Logic to navigate to award catalog page
+        }
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Logging out...");
+            this.Close(); // Close the manager portal and log out
+            // You can navigate to the login page or close the app
         }
     }
 }
