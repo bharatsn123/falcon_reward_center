@@ -110,6 +110,10 @@ namespace EmployeeRewardManagement
                     {
                         MessageBox.Show("Employee login successful!");
                         // Open Employee dashboard
+                        var employeeDashboard = new EmployeePortal(0);
+                        employeeDashboard.Show();
+                        this.Close();
+                        
                     }
                     else
                     {
@@ -118,11 +122,14 @@ namespace EmployeeRewardManagement
                 }
                 else if (selectedRole == "Manager")
                 {
-                    var manager = context.Employee.FirstOrDefault(m => m.ManagerID == userID && m.Password == password);
+                    var manager = context.Employee.FirstOrDefault(m => m.EmployeeID == userID && m.Password == password);
                     if (manager != null)
                     {
                         MessageBox.Show("Manager login successful!");
                         // Open Manager dashboard
+                        var managerDashboard = new ManagerPortal(0);
+                        managerDashboard.Show();
+                        this.Close();
                     }
                     else
                     {
