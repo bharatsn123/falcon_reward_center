@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Threading;
+using EmployeeRewardManagement.Data;
 
 namespace EmployeeRewardManagement
 {

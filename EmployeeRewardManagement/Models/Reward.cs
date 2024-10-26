@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace EmployeeRewardManagement
+namespace EmployeeRewardManagement.Models
 {
     public class Reward
     {

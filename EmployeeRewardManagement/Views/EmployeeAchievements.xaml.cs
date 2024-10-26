@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using EmployeeRewardManagement.Models;
+using EmployeeRewardManagement.Data;
 
 namespace EmployeeRewardManagement
 {

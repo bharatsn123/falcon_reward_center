@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EmployeeRewardManagement.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeRewardManagement
+namespace EmployeeRewardManagement.Data
 {
     public class FalconDbContext : DbContext
     {
