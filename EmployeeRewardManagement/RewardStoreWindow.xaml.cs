@@ -19,6 +19,8 @@ namespace EmployeeRewardManagement
         private int employeeID;
         private int employeePoints;
 
+        public event Action<int> PointsUpdated;
+
         public RewardStoreWindow(int employeeID, int employeePoints)
         {
             InitializeComponent();
@@ -110,10 +112,7 @@ namespace EmployeeRewardManagement
                         context.SaveChanges();
 
                         // Update points in EmployeePortal after deduction
-                        if (Application.Current.MainWindow is EmployeePortal employeePortal)
-                        {
-                            employeePortal.RewardPoints = employee.Points;
-                        }
+                        PointsUpdated?.Invoke(employee.Points); // Trigger the event with updated points
 
                         MessageBox.Show($"You have successfully redeemed: {selectedReward.ItemName}");
                     }

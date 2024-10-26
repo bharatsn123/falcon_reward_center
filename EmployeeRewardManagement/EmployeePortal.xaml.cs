@@ -77,15 +77,20 @@ namespace EmployeeRewardManagement
 
         private void VisitRewardStore_Click(object sender, RoutedEventArgs e)
         {
-            // Create an instance of RewardStoreWindow as a UserControl
             var rewardStoreControl = new RewardStoreWindow(EmployeeId, RewardPoints);
+            rewardStoreControl.PointsUpdated += OnPointsUpdated;
 
-            // Set RewardStoreWindow content into ContentFrame
             ContentFrame.Content = rewardStoreControl;
-
-            // Show RewardStoreGrid and hide MainPortalGrid
+            BackButton.Visibility = Visibility.Visible;
             MainPortalGrid.Visibility = Visibility.Collapsed;
             RewardStoreGrid.Visibility = Visibility.Visible;
+        }
+
+        private void OnPointsUpdated(int updatedPoints)
+        {
+            RewardPoints = updatedPoints;
+            DataContext = null;
+            DataContext = this; // Refresh binding
         }
 
         private void ViewLeaderboard_Click(object sender, RoutedEventArgs e)
