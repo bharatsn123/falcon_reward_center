@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeRewardManagement
@@ -19,16 +16,23 @@ namespace EmployeeRewardManagement
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("Server=170.64.170.2;Database=falcon_reward_center;User=root;Password=C#1Project;" +
-                               "AllowPublicKeyRetrieval=True;SslMode =none;",
-                            new MySqlServerVersion(new Version(8, 0, 39))); // Replace with your MySQL version
-
+                                     "AllowPublicKeyRetrieval=True;SslMode=none;",
+                                     new MySqlServerVersion(new Version(8, 0, 39))); // Replace with your MySQL version
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            // Define StoreItemID as the primary key in RewardStore
             modelBuilder.Entity<RewardStore>()
-                .HasKey(r => r.StoreItemID);  // Define StoreItemID as the primary key
+                .HasKey(r => r.StoreItemID);
+
+            // Update Transaction table mapping:
+            // Define ItemID as foreign key linking to RewardStore's StoreItemID
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.RewardStoreItem)  // Navigation property in Transaction class
+                .WithMany()  // No inverse navigation needed
+                .HasForeignKey(t => t.ItemID)  // Link Transaction.ItemID to RewardStore.StoreItemID
+                .OnDelete(DeleteBehavior.Restrict); // Define delete behavior (optional)
         }
 
         // Method to get points of an employee directly from DbContext
@@ -38,25 +42,23 @@ namespace EmployeeRewardManagement
             return employee != null ? employee.Points : 0;
         }
 
-
         public List<EmployeeAchievementDTO> GetEmployeeAchievements(int employeeID)
         {
             /**
              * Usage:
              *  using (var context = new FalconDbContext())
-                        {
-                            int employeeID = 1001; // Example Employee ID
-                            List<EmployeeAchievementDTO> employeeAchievements = context.GetEmployeeAchievements(employeeID);
-
-                            // Display or process the achievements
-                            foreach (var achievement in employeeAchievements)
-                            {
-                                Console.WriteLine($"Transaction ID: {achievement.TransactionID}, Reward: {achievement.RewardName}, Points: {achievement.Points}, Date: {achievement.TransactionDate}");
-                            }
-                        }
+             *  {
+             *      int employeeID = 1001; // Example Employee ID
+             *      List<EmployeeAchievementDTO> employeeAchievements = context.GetEmployeeAchievements(employeeID);
+             *      // Display or process the achievements
+             *      foreach (var achievement in employeeAchievements)
+             *      {
+             *          Console.WriteLine($"Transaction ID: {achievement.TransactionID}, Reward: {achievement.RewardName}, Points: {achievement.Points}, Date: {achievement.TransactionDate}");
+             *      }
+             *  }
              */
             var query = from t in Transaction
-                        join r in Reward on t.RewardID equals r.RewardID
+                        join r in Reward on t.ItemID equals r.RewardID  // Updated to ItemID
                         where t.EmployeeID == employeeID
                         select new EmployeeAchievementDTO
                         {
@@ -88,12 +90,5 @@ namespace EmployeeRewardManagement
 
             return employees;
         }
-
-
-
-
-
-
     }
-
- }
+}

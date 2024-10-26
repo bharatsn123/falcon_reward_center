@@ -1,20 +1,36 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Threading;
 
 namespace EmployeeRewardManagement
 {
-    public partial class EmployeePortal : Window
+    public partial class EmployeePortal : Window, INotifyPropertyChanged
     {
-        public int RewardPoints { get; set; }
-
+        private int rewardPoints;
+        public int RewardPoints
+        {
+            get => rewardPoints;
+            set
+            {
+                rewardPoints = value;
+                OnPropertyChanged();
+            }
+        }
         public string EmployeeName { get; set; }
-
         public int EmployeeId { get; set; }
         public string CurrentDate { get; set; }
         public string CurrentTime { get; set; }
 
         private DispatcherTimer timer;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public EmployeePortal(int employeeId, string name, int points)
         {
@@ -61,8 +77,15 @@ namespace EmployeeRewardManagement
 
         private void VisitRewardStore_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Visit Reward Store button clicked!");
-            // Logic to navigate to reward store page
+            // Create an instance of RewardStoreWindow as a UserControl
+            var rewardStoreControl = new RewardStoreWindow(EmployeeId, RewardPoints);
+
+            // Set RewardStoreWindow content into ContentFrame
+            ContentFrame.Content = rewardStoreControl;
+
+            // Show RewardStoreGrid and hide MainPortalGrid
+            MainPortalGrid.Visibility = Visibility.Collapsed;
+            RewardStoreGrid.Visibility = Visibility.Visible;
         }
 
         private void ViewLeaderboard_Click(object sender, RoutedEventArgs e)
@@ -81,6 +104,15 @@ namespace EmployeeRewardManagement
             MessageBox.Show("Logging out...");
             this.Close(); // Close the manager portal and log out
             // You can navigate to the login page or close the app
+        }
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Clear the ContentFrame and return to the main dashboard
+            ContentFrame.Content = null;
+
+            // Show MainPortalGrid and hide RewardStoreGrid
+            MainPortalGrid.Visibility = Visibility.Visible;
+            RewardStoreGrid.Visibility = Visibility.Collapsed;
         }
     }
 }

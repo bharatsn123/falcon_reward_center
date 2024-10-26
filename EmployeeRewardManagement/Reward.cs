@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace EmployeeRewardManagement
 {
@@ -18,19 +20,23 @@ namespace EmployeeRewardManagement
         public int StoreItemID { get; set; }
         public string ItemName { get; set; }
         public int RequiredPoints { get; set; }
+        public string ImgUrl { get; set; }
+
+        // Property to hold the processed BitmapImage for display
+        [NotMapped] // Ignore this property in the database schema
+        public ImageSource ImageSource { get; set; }
+
     }
 
     public class Transaction
     {
         public int TransactionID { get; set; }
-        public int ManagerID { get; set; }
         public int EmployeeID { get; set; }
-        public int RewardID { get; set; }
+        public int ItemID { get; set; }
         public DateTime TransactionDate { get; set; } = DateTime.Now;
 
-        public Employee Manager { get; set; }
         public Employee Employee { get; set; }
-        public Reward Reward { get; set; }
+        public RewardStore RewardStoreItem { get; set; }
     }
 
     public class EmployeeAchievementDTO
