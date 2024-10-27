@@ -18,7 +18,14 @@ namespace EmployeeRewardManagement.Data
         {
             optionsBuilder.UseMySql("Server=170.64.170.2;Database=falcon_reward_center;User=root;Password=C#1Project;" +
                                      "AllowPublicKeyRetrieval=True;SslMode=none;",
-                                     new MySqlServerVersion(new Version(8, 0, 39))); // Replace with your MySQL version
+                                     new MySqlServerVersion(new Version(8, 0, 39)),
+                                     mysqlOptions =>
+                                     {
+                                         mysqlOptions.EnableRetryOnFailure(
+                                             maxRetryCount: 5, // Number of retry attempts
+                                             maxRetryDelay: TimeSpan.FromSeconds(3), // Delay between retries
+                                             errorNumbersToAdd: null); 
+                                     });
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,17 +53,6 @@ namespace EmployeeRewardManagement.Data
         public List<EmployeeAchievementDTO> GetEmployeeAchievements(int employeeID)
         {
             /**
-             * Usage:
-             *  using (var context = new FalconDbContext())
-             *  {
-             *      int employeeID = 1001; // Example Employee ID
-             *      List<EmployeeAchievementDTO> employeeAchievements = context.GetEmployeeAchievements(employeeID);
-             *      // Display or process the achievements
-             *      foreach (var achievement in employeeAchievements)
-             *      {
-             *          Console.WriteLine($"Transaction ID: {achievement.TransactionID}, Reward: {achievement.RewardName}, Points: {achievement.Points}, Date: {achievement.TransactionDate}");
-             *      }
-             *  }
              */
             var query = from t in Transaction
                         join r in Reward on t.ItemID equals r.RewardID  // Updated to ItemID
