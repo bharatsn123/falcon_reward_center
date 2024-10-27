@@ -1,21 +1,97 @@
 ﻿<Window x:Class="EmployeeRewardManagement.AdminLoginForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Login" Height="250" Width="300">
-    <Grid>
-        <Label Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,10,0,0" Width="200"/>
+        Title="Falcon Reward Center - Login" Height="400" Width="400" 
+        WindowStartupLocation="CenterScreen"
+        Background="#F3F4F6"
+        Icon="https://cdn.iconscout.com/icon/free/png-512/free-falcon-icon-download-in-svg-png-gif-file-formats--flying-eagle-hawk-emblem-animal-icons-1129253.png">
 
-        <Label Content="Password" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0"/>
-        <PasswordBox x:Name="passwordTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,50,0,0" Width="200"/>
+    <Window.Resources>
+        <!-- Style for Labels -->
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#004080"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
 
-        <Label Content="Role" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,0,0"/>
-        <ComboBox x:Name="roleComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,90,0,0" Width="200" SelectedIndex="2">
-            <ComboBoxItem Content="Admin" />
-            <ComboBoxItem Content="Manager" />
-            <ComboBoxItem Content="Employee" />
-        </ComboBox>
+        <!-- Style for TextBox, PasswordBox, and ComboBox -->
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
 
-        <Button Content="Login" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Margin="100,130,0,0" Click="LoginButton_Click"/>
+        <!-- Style for Login Button -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#004080"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="10,20,0,0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="100"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0066CC"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <!-- Title Section -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,20">
+            <Image Source="https://cdn.iconscout.com/icon/free/png-512/free-falcon-icon-download-in-svg-png-gif-file-formats--flying-eagle-hawk-emblem-animal-icons-1129253.png" 
+                   Width="40" Height="40" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+            <TextBlock Text="Falcon Reward Center" FontSize="20" FontWeight="Bold" Foreground="#004080" HorizontalAlignment="Center"/>
+            <TextBlock Text="Please log in to continue" FontSize="14" Foreground="#333333" HorizontalAlignment="Center" Margin="0,5,0,20"/>
+        </StackPanel>
+
+        <!-- Login Form Section -->
+        <Grid VerticalAlignment="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Username -->
+            <Label Content="Username:" Grid.Row="0" Grid.Column="0"/>
+            <TextBox x:Name="usernameTextBox" Grid.Row="0" Grid.Column="1" Width="200"/>
+
+            <!-- Password -->
+            <Label Content="Password:" Grid.Row="1" Grid.Column="0"/>
+            <PasswordBox x:Name="passwordTextBox" Grid.Row="1" Grid.Column="1" Width="200"/>
+
+            <!-- Role -->
+            <Label Content="Role:" Grid.Row="2" Grid.Column="0"/>
+            <ComboBox x:Name="roleComboBox" Grid.Row="2" Grid.Column="1" Width="200" SelectedIndex="2">
+                <ComboBoxItem Content="Admin" />
+                <ComboBoxItem Content="Manager" />
+                <ComboBoxItem Content="Employee" />
+            </ComboBox>
+
+            <!-- Login Button -->
+            <Button Content="Login" Grid.Row="3" Grid.ColumnSpan="2" Click="LoginButton_Click"/>
+        </Grid>
     </Grid>
 </Window>

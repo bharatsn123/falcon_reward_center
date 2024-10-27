@@ -4,22 +4,81 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="GrantAwardWindow" Height="450" Width="800">
+        Title="Grant Award to Employee" Height="450" Width="800"
+        Background="#F3F4F6"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Header Style -->
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#004080"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,20,0,10"/>
+        </Style>
+
+        <!-- Subheader Style -->
+        <Style x:Key="SubHeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <!-- ComboBox Label Style -->
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#004080"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+        </Style>
+
+        <!-- Button Style -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF004080"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="10"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF0066CC"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <Label Content="Grant Award to Employee" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
+        <!-- Heading and Subheading -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,20,10,0">
+            <!-- Heading -->
+            <TextBlock Text="Grant Award to Employee" Style="{StaticResource HeaderTextStyle}"/>
 
-        <!-- ComboBox to select an employee -->
-        <ComboBox x:Name="EmployeeComboBox" Width="200" Height="30" Margin="10,80,10,0" VerticalAlignment="Top" HorizontalAlignment="Center" 
-                  DisplayMemberPath="Name" />
-        <Label Content="Select Employee" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0"/>
+            <!-- Subheader with guiding text -->
+            <TextBlock Text="As a manager, you can recognize outstanding achievements by granting awards to your employees. Select an employee and an award from the options below." 
+                       Style="{StaticResource SubHeaderTextStyle}"/>
+        </StackPanel>
 
-        <!-- ComboBox to select a reward -->
-        <ComboBox x:Name="RewardComboBox" Width="200" Height="30" Margin="10,160,10,0" VerticalAlignment="Top" HorizontalAlignment="Center" 
-                  DisplayMemberPath="RewardName" />
-        <Label Content="Select Reward" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,0,0"/>
+        <!-- ComboBox for selecting an employee -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,150,0,0">
+            <Label Content="Select Employee:" Style="{StaticResource LabelStyle}"/>
+            <ComboBox x:Name="EmployeeComboBox" Width="250" Height="30" Margin="0,5,0,20" 
+                      DisplayMemberPath="Name" HorizontalAlignment="Center"/>
+        </StackPanel>
 
-        <!-- Button to grant the selected award -->
-        <Button Content="Grant Award" Width="100" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"
+        <!-- ComboBox for selecting a reward -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,250,0,0">
+            <Label Content="Select Reward:" Style="{StaticResource LabelStyle}"/>
+            <ComboBox x:Name="RewardComboBox" Width="250" Height="30" Margin="0,5,0,20" 
+                      DisplayMemberPath="RewardName" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Grant Award Button -->
+        <Button Content="Grant Award" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30"
                 Click="GrantAwardButton_Click"/>
     </Grid>
 </Window>
