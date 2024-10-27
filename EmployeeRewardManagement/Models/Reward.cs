@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace EmployeeRewardManagement.Models
 
     public class RewardStore
     {
+        [Key]
         public int StoreItemID { get; set; }
         public string ItemName { get; set; }
         public int RequiredPoints { get; set; }

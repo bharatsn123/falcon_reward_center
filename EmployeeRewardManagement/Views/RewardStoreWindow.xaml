@@ -10,11 +10,11 @@
         <ListView x:Name="RewardStoreListView" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,50,10,10" Width="750" Height="350" SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Image" Width="150">
+                    <GridViewColumn Header="Image" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <!-- Bind to ImageSource property for the processed BitmapImage -->
-                                <Image Source="{Binding ImageSource}" Width="100" Height="100" Stretch="Uniform" />
+                                <Image Source="{Binding ImageSource}" Width="150" Height="150" Stretch="UniformToFill"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

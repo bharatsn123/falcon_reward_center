@@ -1,0 +1,24 @@
+﻿<Window x:Class="EmployeeRewardManagement.AwardCatalogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Award Catalog" Height="450" Width="600">
+    <Grid>
+        <StackPanel Margin="10">
+            <!-- Heading -->
+            <TextBlock Text="Award Catalog" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+            <!-- Description Text -->
+            <TextBlock Text="Here's the list of all the Awards you could potentially get! Keep working hard!" 
+                       FontSize="14" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,20"/>
+
+            <!-- Data Grid to Display Rewards -->
+            <DataGrid x:Name="RewardsDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Award Name" Binding="{Binding RewardName}" Width="*"/>
+                    <DataGridTextColumn Header="Points Required" Binding="{Binding Points}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>

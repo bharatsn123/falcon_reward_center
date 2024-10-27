@@ -100,7 +100,8 @@ namespace EmployeeRewardManagement
 
         private void ViewAwardCatalog_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Award Catalog button clicked!");
+            var awardCatalogWindow = new AwardCatalogWindow();
+            awardCatalogWindow.ShowDialog();
         }
 
         private void ViewAllEmployees_Click(object sender, RoutedEventArgs e)
@@ -115,7 +116,12 @@ namespace EmployeeRewardManagement
         {
             if (IsManager)
             {
-                MessageBox.Show("Grant Award button clicked!");
+                var grantAwardWindow = new GrantAwardWindow(EmployeeId);  // Pass current manager ID
+                grantAwardWindow.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Only managers can grant awards.");
             }
         }
 
