@@ -105,7 +105,12 @@ namespace EmployeeRewardManagement
         {
             if (IsManager)
             {
-                MessageBox.Show("View All Employees button clicked!");
+                var viewEmployeesWindow = new ViewAllEmployeesWindow(EmployeeId);
+                viewEmployeesWindow.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Only managers can view employees.");
             }
         }
 

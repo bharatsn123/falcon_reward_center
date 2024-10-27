@@ -100,7 +100,7 @@
                 <Button Content="Award Catalog" Click="ViewAwardCatalog_Click"/>
 
                 <!-- Manager-Specific Buttons -->
-                <Button Content="View All Employees" Click="ViewAllEmployees_Click" 
+                <Button Content="View All Reportees" Click="ViewAllEmployees_Click" 
                         Visibility="{Binding IsManager, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 <Button Content="Grant Award" Click="GrantAward_Click" 
                         Visibility="{Binding IsManager, Converter={StaticResource BooleanToVisibilityConverter}}"/>
