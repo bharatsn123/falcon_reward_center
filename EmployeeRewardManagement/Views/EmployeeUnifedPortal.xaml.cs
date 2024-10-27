@@ -73,12 +73,9 @@ namespace EmployeeRewardManagement
         {
             try
             {
-                var rewardStoreControl = new RewardStoreWindow(EmployeeId, RewardPoints);
-                rewardStoreControl.PointsUpdated += OnPointsUpdated;
-                ContentFrame.Content = rewardStoreControl;
-                BackButton.Visibility = Visibility.Visible;
-                MainPortalGrid.Visibility = Visibility.Collapsed;
-                RewardStoreGrid.Visibility = Visibility.Visible;
+                var rewardStoreWindow = new RewardStoreWindow(EmployeeId, RewardPoints);
+                rewardStoreWindow.PointsUpdated += OnPointsUpdated;
+                rewardStoreWindow.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -129,13 +126,6 @@ namespace EmployeeRewardManagement
         {
             MessageBox.Show("Logging out...");
             this.Close();
-        }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentFrame.Content = null;
-            MainPortalGrid.Visibility = Visibility.Visible;
-            RewardStoreGrid.Visibility = Visibility.Collapsed;
         }
     }
 

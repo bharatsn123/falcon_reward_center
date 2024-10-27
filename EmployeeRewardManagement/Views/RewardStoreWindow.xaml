@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="EmployeeRewardManagement.RewardStoreWindow"
+﻿<Window x:Class="EmployeeRewardManagement.RewardStoreWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Height="500" Width="700">
@@ -28,4 +28,4 @@
         <Button Content="Redeem Selected Item" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="200" Height="40" Margin="10,0,0,20" Click="RedeemButton_Click"/>
         <Button Content="View Transaction History" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Height="40" Margin="0,0,10,20" Click="HistoryButton_Click"/>
     </Grid>
-</UserControl>
+</Window>

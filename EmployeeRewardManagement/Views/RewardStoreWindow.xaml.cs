@@ -16,7 +16,7 @@ using EmployeeRewardManagement.Data;
 
 namespace EmployeeRewardManagement
 {
-    public partial class RewardStoreWindow : UserControl
+    public partial class RewardStoreWindow : Window
     {
         private int employeeID;
         private int employeePoints;

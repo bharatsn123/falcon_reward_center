@@ -58,14 +58,5 @@
                         Visibility="{Binding IsManager, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </UniformGrid>
         </Grid>
-
-        <!-- Reward Store Grid (Initially Hidden) -->
-        <Grid x:Name="RewardStoreGrid" Visibility="Collapsed">
-            <!-- Back Button -->
-            <Button x:Name="BackButton" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10" Click="BackButton_Click"/>
-
-            <!-- ContentControl for displaying Reward Store -->
-            <ContentControl x:Name="ContentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
-        </Grid>
     </Grid>
 </Window>
