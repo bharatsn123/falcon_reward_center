@@ -1,20 +1,19 @@
 ﻿<Window x:Class="EmployeeRewardManagement.AdminDashboard"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Admin Dashboard" Height="450" Width="800">
+        Title="Admin Dashboard" Height="600" Width="800">
     <Grid>
         <!-- Logout Button -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10">
             <Button Content="Log Out" Click="LogOutButton_Click"
-                    Width="40" Height="40" Background="Yellow" Foreground="Black" 
-                    FontWeight="Bold" BorderBrush="Yellow" BorderThickness="0" 
-                    HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    Width="69" Height="40" Background="#FFFFB900" Foreground="Black" 
+                    FontWeight="Bold" BorderBrush="Yellow" BorderThickness="0" VerticalAlignment="Center" 
                     Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" />
         </StackPanel>
 
 
         <!-- Add Employee Section -->
-        <GroupBox Header="Add Employee" HorizontalAlignment="Left" VerticalAlignment="Top" Width="350" Height="300" Margin="10">
+        <GroupBox Header="Add Employee" HorizontalAlignment="Left" VerticalAlignment="Top" Width="350" Height="300" Margin="50">
             <StackPanel>
                 <!-- Employee Name TextBox with Placeholder -->
                 <Grid>
@@ -48,10 +47,11 @@
                                x:Name="employeeJobTitlePlaceholder"/>
                 </Grid>
 
+                <Label Content="Select a Manager" Margin="10,5,0,0" />
                 <!-- Manager ComboBox with Placeholder Effect for Employee -->
                 <Grid>
-                    <ComboBox x:Name="employeeManagerComboBox" Width="300" Margin="10" SelectedIndex="-1"/>
-                    <TextBlock Text="Select a Manager" IsHitTestVisible="False" Foreground="Gray"
+                    <ComboBox x:Name="employeeManagerComboBox" Width="300" Margin="10" SelectedIndex="-1" DisplayMemberPath="Name"/>
+                    <TextBlock IsHitTestVisible="False" Foreground="Gray"
                VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" />
                 </Grid>
 
@@ -60,7 +60,7 @@
         </GroupBox>
 
         <!-- Add Manager Section -->
-        <GroupBox Header="Add Manager" HorizontalAlignment="Left" VerticalAlignment="Top" Width="350" Height="300" Margin="400,10,0,0">
+        <GroupBox Header="Add Manager" HorizontalAlignment="Right" VerticalAlignment="Top" Width="350" Height="300" Margin="0,50,30,10">
             <StackPanel>
                 <!-- Manager Name TextBox with Placeholder -->
                 <Grid>
@@ -94,10 +94,11 @@
                        x:Name="managerJobTitlePlaceholder" />
                 </Grid>
 
+                <Label Content="Select a Manager" Margin="10,5,0,0" />
                 <!-- Manager Superior ComboBox with Placeholder Effect for Manager -->
                 <Grid>
-                    <ComboBox x:Name="managerSuperiorComboBox" Width="300" Margin="10" SelectedIndex="-1"/>
-                    <TextBlock Text="Select a Manager" IsHitTestVisible="False" Foreground="Gray"
+                    <ComboBox x:Name="managerSuperiorComboBox" Width="300" Margin="10" SelectedIndex="-1" DisplayMemberPath="Name" />
+                    <TextBlock IsHitTestVisible="False" Foreground="Gray"
                VerticalAlignment="Center" HorizontalAlignment="Left" Margin="25,0,0,0" />
                 </Grid>
 
@@ -106,8 +107,8 @@
         </GroupBox>
 
         <!-- Employees and Managers List -->
-        <DataGrid x:Name="employeeDataGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,230,0,10" Width="350" Height="150" CanUserAddRows="False" />
-        <DataGrid x:Name="managerDataGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,230,10,10" Width="350" Height="150" CanUserAddRows="False" />
+        <DataGrid x:Name="employeeDataGrid" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="50,0,0,50" Width="350" Height="150" CanUserAddRows="False" />
+        <DataGrid x:Name="managerDataGrid" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,50" Width="350" Height="150" CanUserAddRows="False" />
 
     </Grid>
 </Window>

@@ -19,7 +19,14 @@ namespace EmployeeRewardManagement.Data
         {
             optionsBuilder.UseMySql("Server=170.64.170.2;Database=falcon_reward_center;User=root;Password=C#1Project;" +
                                      "AllowPublicKeyRetrieval=True;SslMode=none;",
-                                     new MySqlServerVersion(new Version(8, 0, 39))); // Replace with your MySQL version
+                                     new MySqlServerVersion(new Version(8, 0, 39)),
+                                     mysqlOptions =>
+                                     {
+                                         mysqlOptions.EnableRetryOnFailure(
+                                             maxRetryCount: 5, // Number of retry attempts
+                                             maxRetryDelay: TimeSpan.FromSeconds(3), // Delay between retries
+                                             errorNumbersToAdd: null); 
+                                     });
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
