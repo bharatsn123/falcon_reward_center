@@ -111,7 +111,8 @@ namespace EmployeeRewardManagement
                     {
                         MessageBox.Show("Employee login successful!");
                         // Open Employee dashboard
-                        var employeeDashboard = new EmployeePortal(userID, employee.Name, employee.Points);
+                        // Constructor call to EmployeeUnifiedPortal for Code Reusability
+                        var employeeDashboard = new EmployeeUnifiedPortal(userID, employee.Name, employee.Points, false);
                         employeeDashboard.Show();
                         this.Close();
                         
@@ -128,7 +129,8 @@ namespace EmployeeRewardManagement
                     {
                         MessageBox.Show("Manager login successful!");
                         // Open Manager dashboard
-                        var managerDashboard = new ManagerPortal(userID, manager.Name, manager.Points);
+                        // Constructor call to EmployeeUnifiedPortal for Code Reusability
+                        var managerDashboard = new EmployeeUnifiedPortal(userID, manager.Name, manager.Points, true);
                         managerDashboard.Show();
                         this.Close();
                     }

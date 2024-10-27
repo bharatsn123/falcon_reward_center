@@ -1,0 +1,71 @@
+﻿<Window x:Class="EmployeeRewardManagement.EmployeeUnifiedPortal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Unified Portal" Height="500" Width="700">
+
+    <Window.Resources>
+        <!-- BooleanToVisibilityConverter -->
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Header Section with Date/Time and Logout -->
+        <Grid x:Name="HeaderGrid" VerticalAlignment="Top" Height="80">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Date and Time Display on the Left -->
+            <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Left" Margin="10">
+                <TextBlock Text="{Binding CurrentDate, StringFormat=d MMMM yyyy}" FontSize="12" Margin="0,0,20,0"/>
+                <TextBlock Text="{Binding CurrentTime, StringFormat=HH:mm}" FontSize="12"/>
+            </StackPanel>
+
+            <!-- User Name and Logout Button on the Right -->
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" Margin="10">
+                <TextBlock Text="{Binding EmployeeName}" VerticalAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+                <Button x:Name="LogOutButton" Content="Log Out" Click="LogOut_Click"
+                        Width="70" Height="30" Background="Orange" Foreground="White" 
+                        FontWeight="Bold" BorderBrush="Orange" BorderThickness="0"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Main Content Area -->
+        <Grid x:Name="MainPortalGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,80,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Reward Points Display in Center -->
+            <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,20">
+                <TextBlock Text="Your Reward Points :" FontSize="24" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding RewardPoints}" FontSize="36" FontWeight="Bold" Foreground="Orange" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            </StackPanel>
+
+            <!-- Buttons Section in a 2x3 Layout with Centered Alignment -->
+            <UniformGrid Grid.Row="1" Rows="3" Columns="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,0">
+                <Button Content="View Your Achievements" Width="150" Height="50" Click="ViewAchievements_Click" Margin="10"/>
+                <Button Content="Visit Reward Store" Width="150" Height="50" Click="VisitRewardStore_Click" Margin="10"/>
+                <Button Content="View Leaderboard" Width="150" Height="50" Click="ViewLeaderboard_Click" Margin="10"/>
+                <Button Content="Award Catalog" Width="150" Height="50" Click="ViewAwardCatalog_Click" Margin="10"/>
+
+                <!-- Manager-Specific Buttons -->
+                <Button Content="View All Employees" Width="150" Height="50" Click="ViewAllEmployees_Click" Margin="10" 
+                        Visibility="{Binding IsManager, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <Button Content="Grant Award" Width="150" Height="50" Click="GrantAward_Click" Margin="10" 
+                        Visibility="{Binding IsManager, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </UniformGrid>
+        </Grid>
+
+        <!-- Reward Store Grid (Initially Hidden) -->
+        <Grid x:Name="RewardStoreGrid" Visibility="Collapsed">
+            <!-- Back Button -->
+            <Button x:Name="BackButton" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10" Click="BackButton_Click"/>
+
+            <!-- ContentControl for displaying Reward Store -->
+            <ContentControl x:Name="ContentFrame" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
+        </Grid>
+    </Grid>
+</Window>
