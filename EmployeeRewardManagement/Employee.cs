@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace EmployeeRewardManagement
 {
-    public class Employee
+
+    public interface Person
+    {
+        public string Name { get; set; }
+        public string Address { get; set; }
+
+        public string Password
+        {
+            get; set;
+        }
+    }
+
+    public class Employee : Person
     {
         public int EmployeeID { get; set; } // Employee ID starts with 2
         public string Name { get; set; }
@@ -20,17 +32,6 @@ namespace EmployeeRewardManagement
 
     }
 
-    public class Manager
-    {
-        public int ManagerID { get; set; } // Manager ID starts with 1
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string BusinessUnit { get; set; }
-        public string JobTitle { get; set; }
-        public int Points { get; set; }
-        public int? SuperiorManagerID { get; set; } // Self-referencing foreign key
-        public Manager SuperiorManager { get; set; } // Navigation property
-        public ICollection<Employee> Employees { get; set; } // Navigation property to Employees
-    }
+
 
 }
