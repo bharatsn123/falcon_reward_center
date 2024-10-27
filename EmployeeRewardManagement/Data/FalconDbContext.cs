@@ -85,21 +85,50 @@ namespace EmployeeRewardManagement.Data
         // Method to get the employee leaderboard
         public List<LeaderboardEntryDTO> GetEmployeesLeaderboard()
         {
-            // Fetch the employees from the database and bring the data into memory
-            var employees = Employee
-                .OrderByDescending(e => e.Points) // Order by Points in descending order
-                .AsEnumerable()                   // Move evaluation to in-memory
-                .Select((e, index) => new LeaderboardEntryDTO
-                {
-                    Rank = index + 1,              // Add ranking (starts from 1)
-                    Name = e.Name,
-                    BusinessUnit = e.BusinessUnit,
-                    JobTitle = e.JobTitle,
-                    Points = e.Points
-                })
-                .ToList();
+            using (var context = new FalconDbContext())
+            {
+                // Step 1: Calculate total points for each employee based on awards
+                var employeePoints = context.AwardsGranted
+                    .Join(context.Reward,
+                          award => award.RewardID,
+                          reward => reward.RewardID,
+                          (award, reward) => new { award.EmployeeID, Points = reward.Points })
+                    .GroupBy(x => x.EmployeeID)
+                    .Select(group => new
+                    {
+                        EmployeeID = group.Key,
+                        TotalPoints = group.Sum(x => x.Points)
+                    })
+                    .ToList();  // Execute and materialize in memory to avoid complex LINQ translation issues
 
-            return employees;
+                // Step 2: Retrieve employee data and join in memory
+                var leaderboard = context.Employee
+                    .ToList()  // Materialize Employee list in memory
+                    .Join(employeePoints,
+                          emp => emp.EmployeeID,
+                          points => points.EmployeeID,
+                          (emp, points) => new LeaderboardEntryDTO
+                          {
+                              Name = emp.Name,
+                              BusinessUnit = emp.BusinessUnit,
+                              JobTitle = emp.JobTitle,
+                              Points = points.TotalPoints
+                          })
+                    .OrderByDescending(e => e.Points)
+                    .Select((e, index) => new LeaderboardEntryDTO
+                    {
+                        Rank = index + 1,
+                        Name = e.Name,
+                        BusinessUnit = e.BusinessUnit,
+                        JobTitle = e.JobTitle,
+                        Points = e.Points
+                    })
+                    .ToList();
+
+                return leaderboard;
+            }
         }
+
+
     }
 }

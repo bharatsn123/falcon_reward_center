@@ -227,7 +227,7 @@ namespace EmployeeRewardManagement
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Logging out...");
+            MessageBox.Show("Logging out.");
             this.Close(); // Log out and close the admin dashboard
                           // You can redirect to the login window if necessary
         }
