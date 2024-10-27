@@ -1,4 +1,5 @@
 ﻿using EmployeeRewardManagement;
+using EmployeeRewardManagement.Data;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
