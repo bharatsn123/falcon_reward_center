@@ -70,17 +70,6 @@ namespace EmployeeRewardManagement.Data
             var query = from a in AwardsGranted
                         join r in Reward on a.RewardID equals r.RewardID  // Join on RewardID to get reward details
                         where a.EmployeeID == employeeID
-             *      List<EmployeeAchievementDTO> employeeAchievements = context.GetEmployeeAchievements(employeeID);
-             *      // Display or process the achievements
-             *      foreach (var achievement in employeeAchievements)
-             *      {
-             *          Console.WriteLine($"Transaction ID: {achievement.TransactionID}, Reward: {achievement.RewardName}, Points: {achievement.Points}, Date: {achievement.TransactionDate}");
-             *      }
-             *  }
-             */
-            var query = from t in Transaction
-                        join r in Reward on t.ItemID equals r.RewardID  // Updated to ItemID
-                        where t.EmployeeID == employeeID
                         select new EmployeeAchievementDTO
                         {
                             TransactionID = a.AwardID,  // Using AwardsGrantedID instead of TransactionID
