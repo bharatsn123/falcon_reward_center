@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeRewardManagement
 {
@@ -32,6 +33,13 @@ namespace EmployeeRewardManagement
 
     }
 
-
+    public class AwardsGranted
+    {
+        [Key]
+        public int AwardID { get; set; }
+        public int EmployeeID { get; set; }
+        public int RewardID { get; set; }
+        public DateTime GrantedDate { get; set; }
+    }
 
 }

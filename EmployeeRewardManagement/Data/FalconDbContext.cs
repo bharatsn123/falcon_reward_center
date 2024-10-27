@@ -13,6 +13,7 @@ namespace EmployeeRewardManagement.Data
         public DbSet<Reward> Reward { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
         public DbSet<RewardStore> RewardStore { get; set; }
+        public DbSet<AwardsGranted> AwardsGranted { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,9 +31,23 @@ namespace EmployeeRewardManagement.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Define StoreItemID as the primary key in RewardStore
             modelBuilder.Entity<RewardStore>()
-                .HasKey(r => r.StoreItemID);
+        .HasKey(r => r.StoreItemID);
+
+            modelBuilder.Entity<AwardsGranted>()
+    .HasKey(a => a.AwardID);  // Set AwardID as the primary key
+
+            modelBuilder.Entity<AwardsGranted>()
+                .HasOne<Reward>()  // Assuming a Reward entity is defined
+                .WithMany()        // No navigation property in Reward
+                .HasForeignKey(a => a.RewardID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AwardsGranted>()
+                .HasOne<Employee>()  // Assuming an Employee entity is defined
+                .WithMany()
+                .HasForeignKey(a => a.EmployeeID)
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Update Transaction table mapping:
             // Define ItemID as foreign key linking to RewardStore's StoreItemID
@@ -52,21 +67,31 @@ namespace EmployeeRewardManagement.Data
 
         public List<EmployeeAchievementDTO> GetEmployeeAchievements(int employeeID)
         {
-            /**
+            var query = from a in AwardsGranted
+                        join r in Reward on a.RewardID equals r.RewardID  // Join on RewardID to get reward details
+                        where a.EmployeeID == employeeID
+             *      List<EmployeeAchievementDTO> employeeAchievements = context.GetEmployeeAchievements(employeeID);
+             *      // Display or process the achievements
+             *      foreach (var achievement in employeeAchievements)
+             *      {
+             *          Console.WriteLine($"Transaction ID: {achievement.TransactionID}, Reward: {achievement.RewardName}, Points: {achievement.Points}, Date: {achievement.TransactionDate}");
+             *      }
+             *  }
              */
             var query = from t in Transaction
                         join r in Reward on t.ItemID equals r.RewardID  // Updated to ItemID
                         where t.EmployeeID == employeeID
                         select new EmployeeAchievementDTO
                         {
-                            TransactionID = t.TransactionID,
+                            TransactionID = a.AwardID,  // Using AwardsGrantedID instead of TransactionID
                             RewardName = r.RewardName,
                             Points = r.Points,
-                            TransactionDate = t.TransactionDate
+                            TransactionDate = a.GrantedDate  // Assuming GrantedDate is the date of the award
                         };
 
             return query.ToList();
         }
+
 
         // Method to get the employee leaderboard
         public List<LeaderboardEntryDTO> GetEmployeesLeaderboard()

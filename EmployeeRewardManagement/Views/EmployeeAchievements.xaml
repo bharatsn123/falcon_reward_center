@@ -9,7 +9,6 @@
         <DataGrid x:Name="AchievementsDataGrid" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0"
                   AutoGenerateColumns="False" Width="500" Height="250" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Transaction ID" Binding="{Binding TransactionID}" Width="100"/>
                 <DataGridTextColumn Header="Reward" Binding="{Binding RewardName}" Width="150"/>
                 <DataGridTextColumn Header="Points" Binding="{Binding Points}" Width="100"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding TransactionDate}" Width="150"/>
