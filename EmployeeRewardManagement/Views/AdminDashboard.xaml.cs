@@ -44,6 +44,32 @@ namespace EmployeeRewardManagement
                     managerID = selectedManager.EmployeeID;
                 }
 
+                if (string.IsNullOrEmpty(employeeNameTextBox.Text))
+                {
+                    MessageBox.Show("Employee Add Error: Name can't be empty. Enter name to continue.");
+                    return;
+                }
+                else if (string.IsNullOrEmpty(employeeAddressTextBox.Text))
+                {
+                    MessageBox.Show("Employee Add Error: Address can't be empty.");
+                    return;
+                }
+                else if (string.IsNullOrEmpty(employeeBusinessUnitTextBox.Text))
+                {
+                    MessageBox.Show("Employee Add Error: Business unit can't be empty.");
+                    return;
+                }
+                else if (string.IsNullOrEmpty(employeeJobTitleTextBox.Text))
+                {
+                    MessageBox.Show("Employee Add Error: employee job title can't be empty.");
+                    return;
+                }
+                else if (managerID == null)
+                {
+                    MessageBox.Show("Employee Add Error: Select a manager.");
+                    return;
+                }
+
                 // Create a new employee
                 var employee = new Employee
                 {
@@ -92,6 +118,27 @@ namespace EmployeeRewardManagement
             {
                 // Generate a new ID for the manager
                 var newManagerID = GenerateManagerID();
+
+                if (string.IsNullOrEmpty(managerNameTextBox.Text))
+                {
+                    MessageBox.Show("Manager Add Error: Name can't be empty. Enter name to continue.");
+                    return;
+                }
+                else if (string.IsNullOrEmpty(managerAddressTextBox.Text))
+                {
+                    MessageBox.Show("Manager Add Error: Address can't be empty.");
+                    return;
+                }
+                else if (string.IsNullOrEmpty(managerBusinessUnitTextBox.Text))
+                {
+                    MessageBox.Show("Manager Add Error: Business unit can't be empty.");
+                    return;
+                }
+                else if (string.IsNullOrEmpty(managerJobTitleTextBox.Text))
+                {
+                    MessageBox.Show("Manager Add Error: employee job title can't be empty.");
+                    return;
+                }
 
                 // Find the selected superior manager's ID, if a superior manager is selected
                 int? superiorManagerID = null;
