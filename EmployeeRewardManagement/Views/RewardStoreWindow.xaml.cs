@@ -132,9 +132,11 @@ namespace EmployeeRewardManagement
                         context.Transaction.Add(transaction);
                         context.SaveChanges();
 
-                        // Update points in EmployeePortal after deduction
+                        // Update EmployeePoints directly to reflect the new value
+                        EmployeePoints = employee.Points;
+
                         PointsUpdated?.Invoke(employee.Points); // Trigger the event with updated points
-                        _employeePoints = employee.Points;
+
                         MessageBox.Show($"You have successfully redeemed: {selectedReward.ItemName}");
                     }
                     else
@@ -148,6 +150,7 @@ namespace EmployeeRewardManagement
                 }
             }
         }
+
 
         private void HistoryButton_Click(object sender, RoutedEventArgs e)
         {
