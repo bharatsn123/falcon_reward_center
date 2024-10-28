@@ -53,8 +53,6 @@
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10">
             <!-- Heading -->
             <TextBlock Text="Employee Leaderboard" Style="{StaticResource HeaderTextStyle}"/>
-
-            <!-- Motivational Subtext -->
             <TextBlock Text="See where you stand among your peers! Keep pushing forward and earn more points to climb the leaderboard!" 
                        Style="{StaticResource SubHeaderTextStyle}"/>
         </StackPanel>

@@ -44,30 +44,28 @@ namespace EmployeeRewardManagement.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RewardStore>()
-        .HasKey(r => r.StoreItemID);
+                .HasKey(r => r.StoreItemID);
 
             modelBuilder.Entity<AwardsGranted>()
-    .HasKey(a => a.AwardID);  // Set AwardID as the primary key
+                .HasKey(a => a.AwardID);
 
             modelBuilder.Entity<AwardsGranted>()
-                .HasOne<Reward>()  // Assuming a Reward entity is defined
-                .WithMany()        // No navigation property in Reward
+                .HasOne<Reward>()
+                .WithMany()
                 .HasForeignKey(a => a.RewardID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<AwardsGranted>()
-                .HasOne<Employee>()  // Assuming an Employee entity is defined
+                .HasOne<Employee>()
                 .WithMany()
                 .HasForeignKey(a => a.EmployeeID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Update Transaction table mapping:
-            // Define ItemID as foreign key linking to RewardStore's StoreItemID
             modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.RewardStoreItem)  // Navigation property in Transaction class
-                .WithMany()  // No inverse navigation needed
+                .HasOne(t => t.RewardStoreItem)
+                .WithMany()
                 .HasForeignKey(t => t.ItemID)  // Link Transaction.ItemID to RewardStore.StoreItemID
-                .OnDelete(DeleteBehavior.Restrict); // Define delete behavior (optional)
+                .OnDelete(DeleteBehavior.Restrict); // Define delete behavior
         }
 
         // Method to get points of an employee directly from DbContext
@@ -84,10 +82,10 @@ namespace EmployeeRewardManagement.Data
                         where a.EmployeeID == employeeID
                         select new EmployeeAchievementDTO
                         {
-                            TransactionID = a.AwardID,  // Using AwardsGrantedID instead of TransactionID
+                            TransactionID = a.AwardID,
                             RewardName = r.RewardName,
                             Points = r.Points,
-                            TransactionDate = a.GrantedDate  // Assuming GrantedDate is the date of the award
+                            TransactionDate = a.GrantedDate
                         };
 
             return query.ToList();
@@ -99,7 +97,7 @@ namespace EmployeeRewardManagement.Data
         {
             using (var context = new FalconDbContext())
             {
-                // Step 1: Calculate total points for each employee based on awards
+                // Calculate total points for each employee based on awards
                 var employeePoints = context.AwardsGranted
                     .Join(context.Reward,
                           award => award.RewardID,
@@ -111,11 +109,11 @@ namespace EmployeeRewardManagement.Data
                         EmployeeID = group.Key,
                         TotalPoints = group.Sum(x => x.Points)
                     })
-                    .ToList();  // Execute and materialize in memory to avoid complex LINQ translation issues
+                    .ToList();  // Execute and materialise in memory to avoid complex LINQ translation issues
 
-                // Step 2: Retrieve employee data and join in memory
+                // Retrieve employee data and join in memory
                 var leaderboard = context.Employee
-                    .ToList()  // Materialize Employee list in memory
+                    .ToList()  // Materialise Employee list in memory
                     .Join(employeePoints,
                           emp => emp.EmployeeID,
                           points => points.EmployeeID,
