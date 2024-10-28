@@ -70,7 +70,7 @@
             <Label Content="Reward Store" Style="{StaticResource HeaderLabelStyle}" />
             <TextBlock Text="Redeem your hard-earned points in the reward store! Available Points:" 
                        Style="{StaticResource SubtextStyle}"/>
-            <TextBlock Text="{Binding employeePoints}" FontSize="16" FontWeight="Bold" Foreground="#FFA500" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding EmployeePoints}" FontSize="16" FontWeight="Bold" Foreground="#FFA500" HorizontalAlignment="Center"/>
         </StackPanel>
 
         <!-- Reward Store Items Display -->

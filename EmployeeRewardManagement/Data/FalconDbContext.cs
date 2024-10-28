@@ -8,6 +8,8 @@ namespace EmployeeRewardManagement.Data
 {
     public class FalconDbContext : DbContext
     {
+        // Requirement fulfilled: At least one example of Generics/Generic based Collection
+        // Bonus Requirement fulfilled: Use of Entity framework
         public DbSet<Employee> Employee { get; set; }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Reward> Reward { get; set; }
@@ -15,18 +17,28 @@ namespace EmployeeRewardManagement.Data
         public DbSet<RewardStore> RewardStore { get; set; }
         public DbSet<AwardsGranted> AwardsGranted { get; set; }
 
+        public FalconDbContext(DbContextOptions<FalconDbContext> options) : base(options) { }
+
+        public FalconDbContext() : base() { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("Server=170.64.170.2;Database=falcon_reward_center;User=root;Password=C#1Project;" +
-                                     "AllowPublicKeyRetrieval=True;SslMode=none;",
-                                     new MySqlServerVersion(new Version(8, 0, 39)),
-                                     mysqlOptions =>
-                                     {
-                                         mysqlOptions.EnableRetryOnFailure(
-                                             maxRetryCount: 5, // Number of retry attempts
-                                             maxRetryDelay: TimeSpan.FromSeconds(3), // Delay between retries
-                                             errorNumbersToAdd: null); 
-                                     });
+            // Check if the options have already been configured by tests (in-memory database)
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseMySql(
+                    "Server=170.64.170.2;Database=falcon_reward_center;User=root;Password=C#1Project;" +
+                    "AllowPublicKeyRetrieval=True;SslMode=none;",
+                    new MySqlServerVersion(new Version(8, 0, 39)),
+                    mysqlOptions =>
+                    {
+                        mysqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(3),
+                            errorNumbersToAdd: null
+                        );
+                    });
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

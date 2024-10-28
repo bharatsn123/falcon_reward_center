@@ -13,21 +13,40 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using EmployeeRewardManagement.Models;
 using EmployeeRewardManagement.Data;
+using System.ComponentModel;
 
 namespace EmployeeRewardManagement
 {
-    public partial class RewardStoreWindow : Window
+    public partial class RewardStoreWindow : Window, INotifyPropertyChanged
     {
         private int employeeID;
-        private int employeePoints;
+        private int _employeePoints;
+
+        // Public property for the window bindings to work
+        public int EmployeePoints
+        {
+            get { return _employeePoints; }
+            set
+            {
+                if (_employeePoints != value)
+                {
+                    _employeePoints = value;
+                    OnPropertyChanged(nameof(EmployeePoints));
+                }
+            }
+        }
+
+        // Event handling for any change in employee points
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public event Action<int> PointsUpdated;
 
         public RewardStoreWindow(int employeeID, int employeePoints)
         {
             InitializeComponent();
+            DataContext = this; // Set the DataContext so bindings work
             this.employeeID = employeeID;
-            this.employeePoints = employeePoints;
+            this._employeePoints = employeePoints;
             LoadRewards();
         }
 
@@ -75,7 +94,7 @@ namespace EmployeeRewardManagement
                 return;
             }
 
-            if (employeePoints >= selectedReward.RequiredPoints)
+            if (_employeePoints >= selectedReward.RequiredPoints)
             {
                 // Deduct points and save the transaction
                 RedeemReward(selectedReward);
@@ -115,7 +134,7 @@ namespace EmployeeRewardManagement
 
                         // Update points in EmployeePortal after deduction
                         PointsUpdated?.Invoke(employee.Points); // Trigger the event with updated points
-
+                        _employeePoints = employee.Points;
                         MessageBox.Show($"You have successfully redeemed: {selectedReward.ItemName}");
                     }
                     else
@@ -134,6 +153,11 @@ namespace EmployeeRewardManagement
         {
             var historyWindow = new TransactionHistoryWindow(employeeID);
             historyWindow.ShowDialog();
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }

@@ -9,7 +9,22 @@ using System.Windows.Media;
 
 namespace EmployeeRewardManagement
 {
-    public partial class AdminDashboard : Window
+    // Requirement fulfilled: At least two examples of Interface
+    // Interface for data loading operations
+    public interface IDataLoader
+    {
+        void LoadEmployees();
+        void LoadManagers();
+    }
+
+    // Interface for user actions like adding employees and managers
+    public interface IUserIdGenerator
+    {
+        int GenerateEmployeeID();
+        int GenerateManagerID();
+    }
+
+    public partial class AdminDashboard : Window, IDataLoader, IUserIdGenerator
     {
         public AdminDashboard()
         {
@@ -125,7 +140,7 @@ namespace EmployeeRewardManagement
 
 
 
-        private int GenerateEmployeeID()
+        public int GenerateEmployeeID()
         {
             using (var context = new FalconDbContext())
             {
@@ -137,7 +152,7 @@ namespace EmployeeRewardManagement
             }
         }
 
-        private int GenerateManagerID()
+        public int GenerateManagerID()
         {
             using (var context = new FalconDbContext())
             {
@@ -149,7 +164,7 @@ namespace EmployeeRewardManagement
             }
         }
 
-        private void LoadEmployees()
+        public void LoadEmployees()
         {
             using (var context = new FalconDbContext())
             {
@@ -159,7 +174,7 @@ namespace EmployeeRewardManagement
             }
         }
 
-        private void LoadManagers()
+        public void LoadManagers()
         {
             using (var context = new FalconDbContext())
             {
@@ -229,7 +244,7 @@ namespace EmployeeRewardManagement
         {
             MessageBox.Show("Logging out.");
             this.Close(); // Log out and close the admin dashboard
-                          // You can redirect to the login window if necessary
+                          
         }
     }
 }

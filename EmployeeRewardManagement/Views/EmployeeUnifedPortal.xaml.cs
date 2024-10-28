@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace EmployeeRewardManagement
 {
@@ -71,6 +72,7 @@ namespace EmployeeRewardManagement
 
         private void VisitRewardStore_Click(object sender, RoutedEventArgs e)
         {
+            Debug.Write("REward points passed = " + RewardPoints);
             try
             {
                 var rewardStoreWindow = new RewardStoreWindow(EmployeeId, RewardPoints);
