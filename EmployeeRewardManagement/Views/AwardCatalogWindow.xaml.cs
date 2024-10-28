@@ -12,26 +12,45 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using EmployeeRewardManagement.Data;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace EmployeeRewardManagement
 {
     public partial class AwardCatalogWindow : Window
     {
+        // Chart data properties
+        public SeriesCollection PointsChartValues { get; set; }
+        public List<string> AwardsLabels { get; set; }
+
         public AwardCatalogWindow()
         {
             InitializeComponent();
             LoadRewards();
+
+            // Set DataContext for binding
+            DataContext = this;
         }
 
         private void LoadRewards()
         {
             using (var context = new FalconDbContext())
             {
-                // Fetch all rewards and set them as the DataGrid's data source
                 var rewards = context.Reward.ToList();
                 RewardsDataGrid.ItemsSource = rewards;
+
+                // Populate chart data
+                PointsChartValues = new SeriesCollection
+                {
+                    new ColumnSeries
+                    {
+                        Title = "Points",
+                        Values = new ChartValues<int>(rewards.Select(r => r.Points))
+                    }
+                };
+
+                AwardsLabels = rewards.Select(r => r.RewardName).ToList();
             }
         }
     }
 }
-

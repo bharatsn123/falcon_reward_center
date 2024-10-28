@@ -1,70 +1,42 @@
 ﻿<Window x:Class="EmployeeRewardManagement.AwardCatalogWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Award Catalog" Height="450" Width="600"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="Award Catalog" Height="600" Width="700"
         Background="#F3F4F6"
         WindowStartupLocation="CenterScreen">
-
-    <Window.Resources>
-        <!-- Style for Header Text -->
-        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="#004080"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,10,0,20"/>
-        </Style>
-
-        <!-- Style for Subheader Text -->
-        <Style x:Key="SubHeaderTextStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="#333333"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="Margin" Value="0,0,0,20"/>
-        </Style>
-
-        <!-- Style for DataGrid -->
-        <Style TargetType="DataGrid">
-            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-            <Setter Property="AlternatingRowBackground" Value="#F0F8FF"/>
-            <Setter Property="RowBackground" Value="White"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="#004080"/>
-            <Setter Property="BorderBrush" Value="#004080"/>
-            <Setter Property="Foreground" Value="#333333"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="20"/>
-        </Style>
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Foreground" Value="#004080"/>
-            <Setter Property="Background" Value="#CCE5FF"/>
-            <Setter Property="Padding" Value="10,5"/>
-        </Style>
-        <Style TargetType="DataGridCell">
-            <Setter Property="Padding" Value="8,4"/>
-            <Setter Property="BorderBrush" Value="#004080"/>
-            <Setter Property="BorderThickness" Value="0 0 1 1"/>
-        </Style>
-    </Window.Resources>
 
     <Grid>
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="10">
             <!-- Heading -->
-            <TextBlock Text="Award Catalog" Style="{StaticResource HeaderTextStyle}"/>
+            <TextBlock Text="Award Catalog" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#004080" Margin="0,10,0,20"/>
 
             <!-- Description Text -->
             <TextBlock Text="Here's the list of all the Awards you could potentially get! Keep working hard!" 
-                       Style="{StaticResource SubHeaderTextStyle}"/>
+                       FontSize="14" HorizontalAlignment="Center" Foreground="#333333" Margin="0,0,0,20"/>
 
             <!-- Data Grid to Display Rewards -->
             <DataGrid x:Name="RewardsDataGrid" AutoGenerateColumns="False" CanUserAddRows="False"
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20" 
+                      AlternatingRowBackground="#F0F8FF" RowBackground="White" FontSize="14">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Award Name" Binding="{Binding RewardName}" Width="*"/>
                     <DataGridTextColumn Header="Points Required" Binding="{Binding Points}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
+
+            <!-- Bar Chart for Points -->
+            <lvc:CartesianChart Height="200" Margin="20,20,20,10">
+                <lvc:CartesianChart.Series>
+                    <lvc:ColumnSeries Title="Points" Values="{Binding PointsChartValues[0].Values}" DataLabels="True" Fill="#004080"/>
+                </lvc:CartesianChart.Series>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Awards" Labels="{Binding AwardsLabels}" Foreground="#004080" FontSize="12"/>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Points" Foreground="#004080" FontSize="12"/>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
         </StackPanel>
     </Grid>
 </Window>
